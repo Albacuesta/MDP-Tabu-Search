@@ -1,0 +1,35 @@
+from structure import solution, instance
+from constructives import ctabu
+from localsearch import lsfirstimprove, lsbestimprove
+
+import time
+
+
+def execute(inst, stop_seconds, t, sol):
+    start=time.time()
+    bestCandidate = sol
+    tabuList = []
+    solList = []
+    best=sol.copy()
+    while time.time() - start < stop_seconds:
+        #print("IT " + str(i + 1))
+        #bestCandidate = ctabu.construct(inst, t, bestCandidate, tabuList)
+        ctabu.construct(inst, t, sol, tabuList)
+        solList.append(bestCandidate['of'])
+        print("\tC: "+str(bestCandidate['of']))
+        # lsfirstimprove.improve(sol)
+        # lsbestimprove.improve(bestCandidate)
+        # print("\tLS: " + str(bestCandidate['of']))
+        if best['of'] < bestCandidate['of']:
+            best = bestCandidate
+        #print("\tB: " + str(best['of']))
+        bs = mayor(solList)
+        print("\tB: " + str(bs))
+    return best, bs
+
+def mayor(lista):
+    max = lista[0];
+    for x in lista:
+        if x > max:
+            max = x
+    return max
