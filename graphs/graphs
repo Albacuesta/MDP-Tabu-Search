@@ -1,0 +1,24 @@
+import pandas as pd
+from matplotlib import pyplot as plt
+import plotly.graph_objects as go
+from plotly.offline import iplot
+
+graphs_df=pd.read_csv("resultados.csv", sep= "\t", header=None)
+graphs_df.columns=['fichero', 'n', 'sol', 'time', 't']
+
+amparo=graphs_df[graphs_df['fichero']=="Amparo.csv"]
+borja=graphs_df[graphs_df['fichero']=="Borja.csv"]
+daniel=graphs_df[graphs_df['fichero']=="Daniel.csv"]
+emilio=graphs_df[graphs_df['fichero']=="Emilio.csv"]
+jose=graphs_df[graphs_df['fichero']=="Jose.csv"]
+mj=graphs_df[graphs_df['fichero']=="MariaJesus.csv"]
+raquel=graphs_df[graphs_df['fichero']=="Raquel.csv"]
+virginia=graphs_df[graphs_df['fichero']=="Virginia.csv"]
+
+
+dfs={"amparo": amparo, "borja": borja, "daniel": daniel, "emilio": emilio, "jose": jose, "mj": mj, "raquel": raquel, "virginia": virginia}
+fig=go.Figure()
+for i in dfs:
+    fig=fig.add_trace(go.Scatter(x=dfs[i]['t'], y= dfs[i]['sol'], name=i))
+
+fig.show()
