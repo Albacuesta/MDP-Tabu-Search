@@ -1,0 +1,13 @@
+import random
+from structure import solution
+
+
+def randomSol(inst):
+    sol = solution.createEmptySolution(inst)
+    n = inst['n']
+    while len(sol['sol']) < 25:
+        u = random.randint(0, n - 1)
+        if u not in sol:
+            solution.addToSolution(sol, u)
+
+    return sol
