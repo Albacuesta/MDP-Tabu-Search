@@ -1,0 +1,24 @@
+from structure import solution, instance
+import random
+
+def construct(inst, t, bestCandidate, tabuList):
+    n = inst['n']
+    u = bestCandidate['sol'][0]
+    solution.removeFromSolution(bestCandidate, u)
+    fo = solution.evaluate(bestCandidate)
+    addToTabuList(tabuList, u, t)
+    best = 0
+    candidate = None
+    for j in range(n):
+        if j not in tabuList and j not in bestCandidate['sol']:
+            d = solution.distanceToSolution(bestCandidate, j)
+            if (fo + d) > best:
+                best = d + fo
+                candidate = j
+    solution.addToSolution(bestCandidate, candidate)
+
+
+def addToTabuList(tabuList, u, t):
+    tabuList.append(u)
+    if len(tabuList) > t:
+        tabuList.pop(0)
